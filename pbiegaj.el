@@ -12,3 +12,15 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/rspec-mode")
 (require 'rspec-mode)
 (add-to-list 'auto-mode-alist '("spec\\.rb$" . ruby-mode))
+
+;; Take all the windows in the current frame and shift them over one.
+;; ;;
+;; ;; With 2 windows, effectively switches their positions.
+;; ;;
+;; ;; With 1 window, this is a no-op.
+(defun rotate-windows ()
+  (interactive)
+  (let ((buffers (mapcar 'window-buffer (window-list))))
+    (mapcar* 'set-window-buffer
+             (window-list)
+             (append (cdr buffers) (list (car buffers))))))
